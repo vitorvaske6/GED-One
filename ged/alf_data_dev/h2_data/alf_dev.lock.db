@@ -1,0 +1,6 @@
+#FileLock
+#Mon Jul 12 10:02:08 BRT 2021
+server=127.0.1.1\:34083
+hostName=server-linux-dev
+method=file
+id=17a9acf83672ec863523a7f0a406514fe0ee4e298ee

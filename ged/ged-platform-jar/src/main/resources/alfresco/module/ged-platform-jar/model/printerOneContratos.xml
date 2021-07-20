@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of new Model -->
+<model name="printerOneContratos:printerOneContratos" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+    <!-- Optional meta-data about the model -->
+    <description>Printer One Contratos Model</description>
+    <author>Vitor Vasconcelos</author>
+    <version>1.0</version>
+
+    <!-- Imports are required to allow references to definitions in other models -->
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+    </imports>
+
+    <!-- Introduction of new namespaces defined by this model -->
+    <namespaces>
+        <namespace uri="http://www.printerOneContratos.com/model/content/1.0" prefix="printerOneContratos" />
+    </namespaces>
+    <constraints>
+        <constraint name="printerOneContratos:tInd" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value></value>
+                    <value>IGP-M</value>
+                    <value>IPCA</value>
+                </list>
+            </parameter>
+        </constraint>
+
+        <constraint name="printerOneContratos:tDoc" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value></value>
+                    <value>Contrato</value>
+                    <value>Aditivo</value>
+                </list>
+            </parameter>
+        </constraint>
+
+        <constraint name="printerOneContratos:lEstados" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value></value>
+                    <value> Acre </value> 
+                    <value> Alagoas </value> 
+                    <value> Amapá </value> 
+                    <value> Amazonas </value> 
+                    <value> Bahia </value> 
+                    <value> Ceará </value> 
+                    <value> Distrito Federal </value> 
+                    <value> Espírito Santo </value> 
+                    <value> Goiás </value> 
+                    <value> Maranhão </value> 
+                    <value> Mato Grosso </value> 
+                    <value> Mato Grosso do Sul </value> 
+                    <value> Minas Gerais </value> 
+                    <value> Pará </value> 
+                    <value> Paraíba </value> 
+                    <value> Paraná </value> 
+                    <value> Pernambuco </value> 
+                    <value> Piauí </value> 
+                    <value> Rio de Janeiro </value> 
+                    <value> Rio Grande do Norte </value> 
+                    <value> Rio Grande do Sul </value> 
+                    <value> Rondônia </value> 
+                    <value> Roraima </value> 
+                    <value> Santa Catarina </value> 
+                    <value> São Paulo </value> 
+                    <value> Sergipe </value> 
+                    <value> Tocantins </value> 
+                </list>
+            </parameter>
+        </constraint>
+    </constraints>
+    
+    <aspects>
+        <aspect name="printerOneContratos:printerOneContratos">
+            <title>1. Contratos e Aditivos - Printer One</title>
+            <properties>
+                <property name="printerOneContratos:tDocumento">
+                    <title>Tipo do Documento</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <constraints>
+                        <constraint ref="printerOneContratos:tDoc"/>
+                    </constraints>
+                </property>
+                <property name="printerOneContratos:tIndice">
+                    <title>Tipo Indice</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <constraints>
+                        <constraint ref="printerOneContratos:tInd"/>
+                    </constraints>
+                </property>
+                <property name="printerOneContratos:estado">
+                    <title>Estado</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <constraints>
+                        <constraint ref="printerOneContratos:lEstados"/>
+                    </constraints>
+                </property>
+                <property name="printerOneContratos:equipamentosContrato">
+                    <title>Equipamentos do Contrato</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+
+                <property name="printerOneContratos:contatosCliente">
+                    <title>Contatos do Cliente</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+
+                <property name="printerOneContratos:frA4Mono">
+                    <title>A4 Monocromatico</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:pgA4Mono">
+                    <title>A4 Monocromática</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:cep">
+                    <title>CEP</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:frA3Color">
+                    <title>A3 Color</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:pgA3Mono">
+                    <title>A3 Monocromática </title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:pgA3Color">
+                    <title>A3 Colorida</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:bairro">
+                    <title>Bairro</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:complemento">
+                    <title>Complemento</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:vencido">
+                    <title>Contrato Vencido </title>
+                    <type>d:boolean</type>
+                    <mandatory>true</mandatory>
+                    <default>false</default>
+                </property>
+                <property name="printerOneContratos:nomeEmpresarial">
+                    <title>Nome Empresarial </title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:nomeFantasia">
+                    <title>Nome Fantasia</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:frExA3Color">
+                    <title>Excedente A3 Color</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:indiceReajuste">
+                    <title>Índice De Reajuste </title>
+                    <type>d:double</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:observacao">
+                    <title>Observação</title>
+                    <type>d:mltext</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:inscricaoEstadual">
+                    <title>Inscrição Estadual </title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:numero">
+                    <title>Número</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:numeroExistente">
+                    <title>Número de Contrato Duplicado</title>
+                    <type>d:boolean</type>
+                    <mandatory>false</mandatory>
+                    <default>false</default>
+                </property>
+                <property name="printerOneContratos:frExA4Color">
+                    <title>Excedente A4 Color</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:aprovado">
+                    <title>Contrato Aprovado </title>
+                    <type>d:boolean</type>
+                    <mandatory>true</mandatory>
+                    <default>false</default>
+                </property>
+                <property name="printerOneContratos:vigenciaContrato">
+                    <title>Vigência do Contrato</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:dataInicio">
+                    <title>Data do Início do Contrato</title>
+                    <type>d:date</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:pgA4Color">
+                    <title>A4 Colorida</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:numeroContrato">
+                    <title>Número do Contrato</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:frA4Color">
+                    <title>A4 Color</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:dataFim">
+                    <title>Data do Fim do Contrato </title>
+                    <type>d:date</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:valorMulta">
+                    <title>Valor da Multa Rescisória</title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:valorFranquia">
+                    <title>Valor Total de Franquia</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:contratoReferencia">
+                    <title>Número do Contrato Principal </title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:frExA4Mono">
+                    <title>Excedente A4 Monocromatico</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:statusAssinatura">
+                    <title>Contrato Assinado </title>
+                    <type>d:boolean</type>
+                    <mandatory>true</mandatory>
+                    <default>false</default>
+                </property>
+                <property name="printerOneContratos:valorAluguel">
+                    <title>Valor Total do Aluguel de Equipamentos / Serviços</title>
+                    <type>d:double</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:valorAluguelMensal">
+                    <title>Valor Mensal do Aluguel de Equipamentos / Serviços</title>
+                    <type>d:double</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:frExA3Mono">
+                    <title>Excedente A3 Monocromatico</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:frA3Mono">
+                    <title>A3 Monocromatico</title>
+                    <type>d:double</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:logradouro">
+                    <title>Logradouro</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+                <property name="printerOneContratos:cnpj">
+                    <title>CNPJ do Cliente </title>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:municipio">
+                    <title>Município</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
+            </properties>
+        </aspect>
+    </aspects>
+</model>
