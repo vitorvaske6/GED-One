@@ -1,7 +1,6 @@
 package com.printerone.cmis.examples;
 
 
-
 /**
  * This class creates an printerOneContratos:printerOneContratos object in the folder identified by the root folder parameter.
  * This is a port of the PrinterOneDataCreator class which uses the Alfresco Web Services API. This example
@@ -12,7 +11,7 @@ package com.printerone.cmis.examples;
  */
 
 public class PrinterOneCMISDataCreator extends CMISExampleBase {
-    private static final String USAGE = "java PrinterOneDataCreator <username> <password> <root folder> <doc|whitepaper> <content name>";
+    private static final String USAGE = "java PrinterOneDataCreator <username> <password> <root folder> <hysitech|document> <content name>";
 
 	public static void main(String[] args) throws Exception {
     	if (args.length != 5) doUsage(PrinterOneCMISDataCreator.USAGE);

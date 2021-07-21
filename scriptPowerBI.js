@@ -177,6 +177,9 @@ function filtraMaior(documento) {
 }
 
 function verifica(documento) {
+
+	errmessage += documento;
+
 	var equipamentoArray = [];
 	equipamentoArray = formatarTabela(documento.properties["printerOneContratos:equipamentosContrato"]);
 	var valorEquip = (documento.properties["printerOneContratos:equipamentosContrato"].match(new RegExp("delete", "g")) || []).length;

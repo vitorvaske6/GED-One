@@ -1,6 +1,5 @@
 package com.printerone.cmis.examples;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -23,12 +22,12 @@ import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.opencmis.commons.enums.VersioningState;
 
-import com.someco.examples.ExampleBase;
+import com.printerone.examples.ExampleBase;
 
 /**
  * This class holds common properties and methods for the example classes.
  * 
- * @author jpotts
+ * @author Vitor Vaske
  */
 public class CMISExampleBase extends ExampleBase {
 	private static final String USAGE = "java CMISExampleBase <username> <password>";
@@ -124,12 +123,15 @@ public class CMISExampleBase extends ExampleBase {
 		
 		// To set the content type and add the webable and productRelated aspects
 		// using CMIS 1.1 which has aspect support natively, do this:
-		properties.put(PropertyIds.OBJECT_TYPE_ID, "D:sc:whitepaper");
 		
-		properties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, Arrays.asList("P:sc:webable", "P:sc:productRelated", "P:cm:generalclassifiable"));
-		properties.put("sc:isActive", true);
-		GregorianCalendar publishDate = new GregorianCalendar(2007,4,1,5,0);
-		properties.put("sc:published", publishDate);
+		//properties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, Arrays.asList("P:printerOneContratos:printerOneContratos"));
+		//properties.put("sc:isActive", true);
+		//GregorianCalendar publishDate = new GregorianCalendar(2007,4,1,5,0);
+		//properties.put("sc:published", publishDate);
+
+		properties.put(PropertyIds.OBJECT_TYPE_ID, "D:cm:content");//D:hysitech:document
+		properties.put(PropertyIds.SECONDARY_OBJECT_TYPE_IDS, Arrays.asList("P:printerOneContratos:printerOneContratos","P:hysitech:sign"));
+
 
 		String docText = "This is a sample " + contentType + " document called " + docName;
 		byte[] content = docText.getBytes();
