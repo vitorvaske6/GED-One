@@ -483,6 +483,13 @@ function formataSaidaColuna() {
 
 function formataSaidaLinha(documento) {
 
+	var dataF = new Date(documento.properties["printerOneContratos:dataFim"]);
+	var dataI = new Date(documento.properties["printerOneContratos:dataInicio"]);
+
+	var dataFstr = dataF.getUTCDay() + "/" + dataF.getUTCMonth() + "/" + dataF.getUTCFullYear() + "; ";
+	var dataIstr = dataI.getUTCDay() + "/" + dataI.getUTCMonth() + "/" + dataI.getUTCFullYear() + "; ";
+
+
 	saidaLinhas[numLinha] = "\n" + documento.name + "; " +
 		documento.properties["printerOneContratos:tDocumento"] + "; " +
 		documento.properties["printerOneContratos:cnpj"] + "; " +
@@ -490,14 +497,32 @@ function formataSaidaLinha(documento) {
 		documento.properties["printerOneContratos:nomeEmpresarial"] + "; " +
 		documento.properties["printerOneContratos:nomeFantasia"] + "; " +
 		documento.properties["printerOneContratos:numeroContrato"] + "; " +
-		documento.properties["printerOneContratos:dataInicio"] + "; " +
-		documento.properties["printerOneContratos:dataFim"] + "; " +
-		documento.properties["printerOneContratos:tIndice"] + "; " +
-		documento.properties["printerOneContratos:indiceReajuste"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:valorAluguel"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:valorAluguelMensal"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:valorMulta"].toString().replace('.', ',') + "; " +
+		dataIstr +
+		dataFstr +
+		documento.properties["printerOneContratos:tIndice"] + "; " ;
+
+		if (documento.properties["printerOneContratos:indiceReajuste"] != null  && documento.properties["printerOneContratos:indiceReajuste"] != 0){
+			saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:indiceReajuste"].toString().replace('.', ',') + "; " ;
+		}
+		else{
+			saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+		}
+		if (documento.properties["printerOneContratos:valorAluguel"] != null && documento.properties["printerOneContratos:valorAluguel"] != 0.00){
+			saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:valorAluguel"].toString().replace('.', ',') + "; " ;
+		}
+		else{
+			saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+		}
+		if (documento.properties["printerOneContratos:valorAluguelMensal"] != null  && documento.properties["printerOneContratos:valorAluguelMensal"] != 0.00){
+			saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:valorAluguelMensal"].toString().replace('.', ',') + "; " ;
+		}
+		else{
+			saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+		}
+
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:valorMulta"]+ "; " +
 		documento.properties["printerOneContratos:vigenciaContrato"] + "; ";
+
 
 	for (var i = 0; i <= tabelaEquipamentoLinhas.length - 1; i++) {
 		saidaLinhas[numLinha] = saidaLinhas[numLinha] + tabelaEquipamentoLinhas[i];
@@ -510,20 +535,84 @@ function formataSaidaLinha(documento) {
 		}
 	}
 
-	saidaLinhas[numLinha] = saidaLinhas[numLinha] +
-		documento.properties["printerOneContratos:pgA3Color"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:pgA3Mono"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:pgA4Color"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:pgA4Mono"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frA3Color"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frA3Mono"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frA4Color"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frA4Mono"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:valorFranquia"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frExA3Mono"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frExA3Color"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frExA4Color"].toString().replace('.', ',') + "; " +
-		documento.properties["printerOneContratos:frExA4Mono"].toString().replace('.', ',') + "; ";
+	if (documento.properties["printerOneContratos:pgA3Color"] != null  && documento.properties["printerOneContratos:pgA3Color"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:pgA3Color"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:pgA3Mono"] != null  && documento.properties["printerOneContratos:pgA3Mono"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:pgA3Mono"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:pgA4Color"] != null  && documento.properties["printerOneContratos:pgA4Color"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:pgA4Color"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:pgA4Mono"] != null  && documento.properties["printerOneContratos:pgA4Mono"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:pgA4Mono"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frA3Color"] != null  && documento.properties["printerOneContratos:frA3Color"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frA3Color"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frA3Mono"] != null  && documento.properties["printerOneContratos:frA3Mono"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frA3Mono"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frA4Color"] != null  && documento.properties["printerOneContratos:frA4Color"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frA4Color"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frA4Mono"] != null  && documento.properties["printerOneContratos:frA4Mono"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frA4Mono"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:valorFranquia"] != null  && documento.properties["printerOneContratos:valorFranquia"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:valorFranquia"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frExA3Mono"] != null  && documento.properties["printerOneContratos:frExA3Mono"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frExA3Mono"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frExA3Mono"] != null  && documento.properties["printerOneContratos:frExA3Mono"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frExA3Mono"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frExA4Color"] != null  && documento.properties["printerOneContratos:frExA4Color"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frExA4Color"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
+	if (documento.properties["printerOneContratos:frExA4Mono"] != null  && documento.properties["printerOneContratos:frExA4Mono"] != 0.00){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + documento.properties["printerOneContratos:frExA4Mono"].toString().replace('.', ',') + "; ";
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] + "0,00; ";
+	}
 
 	for (var i = 0; i <= tabelaContatoLinhas.length - 1; i++) {
 		saidaLinhas[numLinha] = saidaLinhas[numLinha] + tabelaContatoLinhas[i];
@@ -543,11 +632,21 @@ function formataSaidaLinha(documento) {
 		documento.properties["printerOneContratos:complemento"] + "; " +
 		documento.properties["printerOneContratos:cep"] + "; " +
 		documento.properties["printerOneContratos:municipio"] + "; " +
-		documento.properties["printerOneContratos:estado"] + "; " +
-		documento.properties["printerOneContratos:observacao"] + "; " +
+		documento.properties["printerOneContratos:estado"] + "; ";
+	
+	if (documento.properties["printerOneContratos:observacao"] != null){
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] +
+		documento.properties["printerOneContratos:observacao"].replace(/\n/g,' ') + "; " ;
+	}
+	else{
+		saidaLinhas[numLinha] = saidaLinhas[numLinha] +
+		documento.properties["printerOneContratos:observacao"]+ "; ";
+	}
+
+
+	saidaLinhas[numLinha] = saidaLinhas[numLinha] +
 		documento.properties["printerOneContratos:contratoReferencia"] + "; " +
 		documento.properties["printerOneContratos:aprovado"] + "; " +
 		documento.properties["printerOneContratos:statusAssinatura"] + "; " +
 		documento.properties["printerOneContratos:vencido"] + "; ";
-
 }

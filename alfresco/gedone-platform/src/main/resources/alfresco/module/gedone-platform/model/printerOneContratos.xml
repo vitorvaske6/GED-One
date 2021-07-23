@@ -23,7 +23,7 @@
             <parameter name="allowedValues">
                 <list>
                     <value></value>
-                    <value>IGPM</value>
+                    <value>IGP-M</value>
                     <value>IPCA</value>
                 </list>
             </parameter>
@@ -145,6 +145,11 @@
                     <type>d:double</type>
                     <mandatory>false</mandatory>
                 </property>
+                <property name="printerOneContratos:bairro">
+                    <title>Bairro</title>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                </property>
                 <property name="printerOneContratos:complemento">
                     <title>Complemento</title>
                     <type>d:text</type>
@@ -216,7 +221,7 @@
                 <property name="printerOneContratos:dataInicio">
                     <title>Data do Início do Contrato</title>
                     <type>d:date</type>
-                    <mandatory>true</mandatory>
+                    <mandatory>false</mandatory>
                 </property>
                 <property name="printerOneContratos:pgA4Color">
                     <title>A4 Colorida</title>
@@ -236,7 +241,7 @@
                 <property name="printerOneContratos:dataFim">
                     <title>Data do Fim do Contrato </title>
                     <type>d:date</type>
-                    <mandatory>true</mandatory>
+                    <mandatory>false</mandatory>
                 </property>
                 <property name="printerOneContratos:valorMulta">
                     <title>Valor da Multa Rescisória</title>
@@ -265,7 +270,12 @@
                     <default>false</default>
                 </property>
                 <property name="printerOneContratos:valorAluguel">
-                    <title>Valor Global do Aluguel de Equipamentos / Serviços</title>
+                    <title>Valor Total do Aluguel de Equipamentos / Serviços</title>
+                    <type>d:double</type>
+                    <mandatory>true</mandatory>
+                </property>
+                <property name="printerOneContratos:valorAluguelMensal">
+                    <title>Valor Mensal do Aluguel de Equipamentos / Serviços</title>
                     <type>d:double</type>
                     <mandatory>true</mandatory>
                 </property>
