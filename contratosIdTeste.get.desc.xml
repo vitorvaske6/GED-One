@@ -1,0 +1,9 @@
+<webscript>
+    <shortname>Get Contrato por ID</shortname>
+    <description>Retorna os dados do Contrato especificado</description>
+    <url>/printerone/contratosTeste/id?id={id}</url>
+    <url>/printerone/contratosTeste/id.json?id={id}</url>
+    <format default="json">extension</format>
+    <authentication>user</authentication>
+    <transaction>none</transaction>
+</webscript>

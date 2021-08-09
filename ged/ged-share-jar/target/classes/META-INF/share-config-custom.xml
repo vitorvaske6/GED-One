@@ -1,0 +1,1289 @@
+<!-- Share configuration related to this particular Share module extension, such as:
+     - Doclib action config
+     - Form config
+     - Aspect and Type config
+     - Advanced Search
+
+    Note. Any configuration related to the whole Share.war webapp
+           (i.e. not specific to this share extension) should be
+            placed in the environment specific config file:
+             alfresco/tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml
+     -->
+<alfresco-config>
+    <!--================================================================================================================
+        Make custom types and aspects visible in "Change Type" and "Manage Aspects" actions.
+         This will also make them visible when creating rules.
+        (will be merged with out-of-the-box configured types and aspects)
+    =============================================================================================================-->
+
+    <config evaluator="string-compare" condition="DocumentLibrary">
+        <aspects>
+            <!-- Aspects that a user can see -->
+            <visible>
+                <aspect name="printerOneContratos:printerOneContratos" />
+            </visible>
+
+            <!-- Aspects that a user can add. Same as "visible" if left empty -->
+            <addable></addable>
+
+            <!-- Aspects that a user can remove. Same as "visible" if left empty -->
+            <removeable></removeable>
+        </aspects>
+        <types>
+            <!-- Define the ACME base doc type as decedent from cm:content 
+            <type name="cm:content">
+                <subtype name="acme:document"/>
+            </type>-->
+        </types>
+    </config>
+
+    <!--================================================================================================================
+          Advanced Search Forms for types
+          (search forms for aspects are not available)
+      =============================================================================================================-->
+
+    <config evaluator="string-compare" condition="AdvancedSearch" replace="true">
+        <advanced-search>
+            <forms>
+                <!-- Standard out-of-the-box types -->
+                <form labelId="search.form.label.cm_content" descriptionId="search.form.desc.cm_content">cm:content
+                </form>
+                <form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
+
+                <!-- Custom type -->
+                <form labelId="form.label.advancedsearch.acmeDocument" descriptionId="form.description.advancedsearch.acmeDocument">acme:document</form>
+            </forms>
+        </advanced-search>
+    </config>
+
+    <!--================================================================================================================
+         View, Edit, Create, and Search forms for custom types
+
+         The following form configurations for the custom types
+         have not been created from scratch. We have instead copied
+         out-of-the-box form configurations for cm:content and cm:folder
+         from the tomcat/webapps/share/WEB-INF/classes/alfresco/share-form-config.xml file
+         in a standard Alfresco installation (with the version matching)
+         and used them as a starting point.
+
+        =============================================================================================================-->
+
+    <!-- __________________________________ acme:document base type _________________________________________________-->
+
+    <config evaluator="node-type" condition="cm:content" replace="true">
+        <forms>
+            <form>
+                <field-visibility>
+                    <show id="cm:name" for-mode="edit" />
+                    <show id="cm:title" for-mode="edit" />
+                    <show id="cm:description" for-mode="edit" />
+                    <show id="mimetype" for-mode="edit" />
+                    <show id="cm:author" for-mode="edit" />
+                    <show id="size" for-mode="edit" />
+                    <show id="cm:creator" for-mode="edit" />
+                    <show id="cm:created" for-mode="edit" />
+                    <show id="cm:modifier" for-mode="edit" />
+                    <show id="cm:modified" for-mode="edit" />
+
+                    <!-- tags and categories -->
+                    <show id="cm:taggable" for-mode="edit" />
+                    <show id="cm:categories" for-mode="edit" />
+
+                    <!-- cm:dublincore aspect -->
+                    <show id="cm:publisher" />
+                    <show id="cm:contributor" />
+                    <show id="cm:type" />
+                    <show id="cm:identifier" />
+                    <show id="cm:dcsource" />
+                    <show id="cm:coverage" />
+                    <show id="cm:rights" />
+                    <show id="cm:subject" />
+
+                    <!-- cm:complianceable aspect -->
+                    <show id="cm:removeAfter" />
+
+                    <!-- cm:effectivity aspect -->
+                    <show id="cm:from" />
+                    <show id="cm:to" />
+
+                    <!--  cm:summarizable aspect -->
+                    <show id="cm:summary" />
+
+                    <!-- cm:translatable aspect -->
+                    <show id="cm:translations" />
+
+                    <!-- cm:localizable aspect -->
+                    <show id="cm:locale" />
+
+                    <!-- cm:ownable aspect -->
+                    <show id="cm:owner" />
+
+                    <!-- cm:attachable aspect -->
+                    <show id="cm:attachments" />
+
+                    <!-- cm:emailed aspect -->
+                    <show id="cm:originator" />
+                    <show id="cm:addressee" />
+                    <show id="cm:addressees" />
+                    <show id="cm:sentdate" />
+                    <show id="cm:subjectline" />
+
+                    <!-- exif:exif aspect -->
+                    <show id="exif:dateTimeOriginal" />
+                    <show id="exif:pixelXDimension" />
+                    <show id="exif:pixelYDimension" />
+                    <show id="exif:exposureTime" />
+                    <show id="exif:fNumber" />
+                    <show id="exif:flash" />
+                    <show id="exif:focalLength" />
+                    <show id="exif:isoSpeedRatings" />
+                    <show id="exif:manufacturer" />
+                    <show id="exif:model" />
+                    <show id="exif:software" />
+                    <show id="exif:orientation" />
+                    <show id="exif:xResolution" />
+                    <show id="exif:yResolution" />
+                    <show id="exif:resolutionUnit" />
+
+                    <!-- audio:audio aspect -->
+                    <show id="audio:album" />
+                    <show id="audio:artist" />
+                    <show id="audio:composer" />
+                    <show id="audio:engineer" />
+                    <show id="audio:genre" />
+                    <show id="audio:trackNumber" />
+                    <show id="audio:releaseDate" />
+                    <show id="audio:sampleRate" />
+                    <show id="audio:sampleType" />
+                    <show id="audio:channelType" />
+                    <show id="audio:compressor" />
+
+                    <!-- cm:indexControl aspect -->
+                    <show id="cm:isIndexed" />
+                    <show id="cm:isContentIndexed" />
+
+                    <!-- cm:geographic aspect -->
+                    <show id="cm:latitude" />
+                    <show id="cm:longitude" />
+
+                    <!-- surf:widget aspect -->
+                    <show id="surf:widgetType" />
+                    <show id="surf:mid" />
+                    <show id="surf:label" />
+                </field-visibility>
+            </form>
+        </forms>
+    </config>
+
+    <!--================================================================================================================
+              Advanced Search Forms for types
+              (search forms for aspects are not available)
+          =============================================================================================================-->
+
+    <config evaluator="string-compare" condition="AdvancedSearch" replace="true">
+        <advanced-search>
+            <forms>
+                <!-- Standard out-of-the-box types -->
+                <form labelId="search.form.label.cm_content" descriptionId="search.form.desc.cm_content">cm:content
+                    </form>
+                <form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
+
+                <!-- Custom type -->
+                <form labelId="type.sc_whitepaper" descriptionId="search.form.desc.sc_whitepaper">sc:whitepaper</form>
+
+                <form labelId="aspect.printerOneContratos_printerOneContratos" descriptionId="search.form.desc.printerOneContratos_printerOneContratos">printerOneContratos:printerOneContratos</form>
+            </forms>
+        </advanced-search>
+    </config>
+
+    <!--================================================================================================================
+             View, Edit, Create, and Search forms for custom types
+    
+             The following form configurations for the custom types
+             have not been created from scratch. We have instead copied
+             out-of-the-box form configurations for cm:content and cm:folder
+             from the tomcat/webapps/share/WEB-INF/classes/alfresco/share-form-config.xml file
+             in a standard Alfresco installation (with the version matching)
+             and used them as a starting point.
+    
+            =============================================================================================================-->
+    <config evaluator="aspect" condition="printerOneContratos:printerOneContratos">
+        <forms>
+            <form>
+                <field-visibility>
+                    <hide id="cm:name" for-mode="edit" />
+                    <hide id="cm:title" for-mode="edit" />
+                    <hide id="cm:description" for-mode="edit" />
+                    <hide id="mimetype" for-mode="edit" />
+                    <hide id="cm:author" for-mode="edit" />
+                    <hide id="size" for-mode="edit" />
+                    <hide id="cm:creator" for-mode="edit" />
+                    <hide id="cm:created" for-mode="edit" />
+                    <hide id="cm:modifier" for-mode="edit" />
+                    <hide id="cm:modified" for-mode="edit" />
+
+                    <!-- tags and categories -->
+                    <hide id="cm:taggable" for-mode="edit" />
+                    <hide id="cm:categories" for-mode="edit" />
+
+                    <!-- cm:dublincore aspect -->
+                    <hide id="cm:publisher" />
+                    <hide id="cm:contributor" />
+                    <hide id="cm:type" />
+                    <hide id="cm:identifier" />
+                    <hide id="cm:dcsource" />
+                    <hide id="cm:coverage" />
+                    <hide id="cm:rights" />
+                    <hide id="cm:subject" />
+
+                    <!-- cm:complianceable aspect -->
+                    <hide id="cm:removeAfter" />
+
+                    <!-- cm:effectivity aspect -->
+                    <hide id="cm:from" />
+                    <hide id="cm:to" />
+
+                    <!--  cm:summarizable aspect -->
+                    <hide id="cm:summary" />
+
+                    <!-- cm:translatable aspect -->
+                    <hide id="cm:translations" />
+
+                    <!-- cm:localizable aspect -->
+                    <hide id="cm:locale" />
+
+                    <!-- cm:ownable aspect -->
+                    <hide id="cm:owner" />
+
+                    <!-- cm:attachable aspect -->
+                    <hide id="cm:attachments" />
+
+                    <!-- cm:emailed aspect -->
+                    <hide id="cm:originator" />
+                    <hide id="cm:addressee" />
+                    <hide id="cm:addressees" />
+                    <hide id="cm:sentdate" />
+                    <hide id="cm:subjectline" />
+
+                    <!-- exif:exif aspect -->
+                    <hide id="exif:dateTimeOriginal" />
+                    <hide id="exif:pixelXDimension" />
+                    <hide id="exif:pixelYDimension" />
+                    <hide id="exif:exposureTime" />
+                    <hide id="exif:fNumber" />
+                    <hide id="exif:flash" />
+                    <hide id="exif:focalLength" />
+                    <hide id="exif:isoSpeedRatings" />
+                    <hide id="exif:manufacturer" />
+                    <hide id="exif:model" />
+                    <hide id="exif:software" />
+                    <hide id="exif:orientation" />
+                    <hide id="exif:xResolution" />
+                    <hide id="exif:yResolution" />
+                    <hide id="exif:resolutionUnit" />
+
+                    <!-- audio:audio aspect -->
+                    <hide id="audio:album" />
+                    <hide id="audio:artist" />
+                    <hide id="audio:composer" />
+                    <hide id="audio:engineer" />
+                    <hide id="audio:genre" />
+                    <hide id="audio:trackNumber" />
+                    <hide id="audio:releaseDate" />
+                    <hide id="audio:sampleRate" />
+                    <hide id="audio:sampleType" />
+                    <hide id="audio:channelType" />
+                    <hide id="audio:compressor" />
+
+                    <!-- cm:indexControl aspect -->
+                    <hide id="cm:isIndexed" />
+                    <hide id="cm:isContentIndexed" />
+
+                    <!-- cm:geographic aspect -->
+                    <hide id="cm:latitude" />
+                    <hide id="cm:longitude" />
+
+                    <!-- surf:widget aspect -->
+                    <show id="surf:widgetType" />
+                    <show id="surf:mid" />
+                    <show id="surf:label" />
+
+
+                    <show id="printerOneContratos:tDocumento" />
+
+                    <show id="printerOneContratos:cnpj" />
+                    <show id="printerOneContratos:inscricaoEstadual" />
+                    <show id="printerOneContratos:nomeEmpresarial" />
+                    <show id="printerOneContratos:nomeFantasia" />
+                    <show id="printerOneContratos:numeroContrato" />
+                    <show id="printerOneContratos:numeroExistente" />
+                    <show id="printerOneContratos:dataInicio" />
+                    <show id="printerOneContratos:dataFim" />
+
+                    <show id="printerOneContratos:tIndice" />
+                    <show id="printerOneContratos:indiceReajuste" />
+                    <show id="printerOneContratos:valorAluguel" />
+                    <show id="printerOneContratos:valorAluguelMensal" />
+                    <show id="printerOneContratos:valorMulta" />
+                    <show id="printerOneContratos:vigenciaContrato" />
+
+                    <show id="printerOneContratos:equipamentosContrato" />
+
+                    <show id="printerOneContratos:pgA3Color" />
+                    <show id="printerOneContratos:pgA3Mono" />
+                    <show id="printerOneContratos:pgA4Color" />
+                    <show id="printerOneContratos:pgA4Mono" />
+                    <show id="printerOneContratos:frA3Color" />
+                    <show id="printerOneContratos:frA3Mono" />
+                    <show id="printerOneContratos:frA4Color" />
+                    <show id="printerOneContratos:frA4Mono" />
+                    <show id="printerOneContratos:valorFranquia" />
+
+                    <show id="printerOneContratos:contatosCliente" />
+
+                    <show id="printerOneContratos:frExA3Mono" />
+                    <show id="printerOneContratos:frExA3Color" />
+                    <show id="printerOneContratos:frExA4Color" />
+                    <show id="printerOneContratos:frExA4Mono" />
+                    <show id="printerOneContratos:logradouro" />
+                    <show id="printerOneContratos:numero" />
+                    <show id="printerOneContratos:bairro" />
+                    <show id="printerOneContratos:complemento" />
+                    <show id="printerOneContratos:cep" />
+                    <show id="printerOneContratos:municipio" />
+                    <show id="printerOneContratos:estado" />
+                    <show id="printerOneContratos:observacao" />
+                    <show id="printerOneContratos:contratoReferencia" />
+                    <show id="printerOneContratos:aprovado" />
+                    <show id="printerOneContratos:statusAssinatura" />
+                    <show id="printerOneContratos:vencido" />
+                </field-visibility>
+                <appearance>
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set0" label-id="Tipo de Contrato" template="/org/alfresco/components/form/3-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set1" label-id="Dados do Cliente" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set2" label-id="Dados do Contrato" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set3" label-id="Equipamentos do Contrato" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set4" label-id="Valor por Pagina" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set5" label-id="Franquia" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set7" label-id="Excedentes" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set6" label-id="Contato" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set8" label-id="Endereço do Cliente" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set9" label-id=" " />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set10" label-id="Status do Contrato" template="/org/alfresco/components/form/3-column-set.ftl" />
+                    <field id="printerOneContratos:tIndice" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:cnpj" label-id="prop.printerOneContratos_cnpj" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                            <control-param name="maxLength">18</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:equipamentosContrato" set="printerOneContratos:printerOneContratos_cmm_set3">
+                        <control template="/org/alfresco/form/controls/datatable-popup-property-equipamentos.ftl">
+                            <control-param name="config">
+                                            qtd, Quantidade, number;
+                                            desc, Descrição, text;
+                                            valorUni, Valor Unitário, currency;
+                                            total, Total, currency;
+                                </control-param>
+                            <control-param name="debug">false</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:dataFim" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:indiceReajuste" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA4Color" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:tDocumento" set="printerOneContratos:printerOneContratos_cmm_set0">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:municipio" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorMulta" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numeroContrato" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:complemento" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:nomeEmpresarial" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA3Color" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numero" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:contratoReferencia" set="printerOneContratos:printerOneContratos_cmm_set9">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA4Mono" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:contatosCliente" set="printerOneContratos:printerOneContratos_cmm_set6">
+                        <control template="/org/alfresco/form/controls/datatable-popup-property-contatos.ftl">
+                            <control-param name="config">
+                                            nome, Nome, text;
+                                            email, E-mail, text;
+                                            tel, Telefone, text;
+                                </control-param>
+                            <control-param name="debug">false</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:aprovado" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:observacao" set="printerOneContratos:printerOneContratos_cmm_set9">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:dataInicio" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:bairro" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:cep" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                            <control-param name="maxLength">10</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:nomeFantasia" label-id="prop.printerOneContratos_nomeFantasia" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:vencido" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorAluguel" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorAluguelMensal" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA4Mono" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorFranquia" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:vigenciaContrato" read-only="true" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA3Mono" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA3Color" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA3Mono" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA4Color" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:inscricaoEstadual" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:logradouro" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:statusAssinatura" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:estado" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numeroExistente" read-only="true" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA3Mono" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA4Color" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA3Color" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA4Mono" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                </appearance>
+            </form>
+
+
+            <!-- Document Library pop-up Edit Metadata form -->
+            <form id="doclib-simple-metadata">
+                <field-visibility>
+                    <hide id="cm:name" />
+                    <hide id="cm:title" force="true" />
+                    <hide id="cm:description" force="true" />
+                    <!-- tags and categories -->
+                    <hide id="cm:taggable" for-mode="edit" force="true" />
+                    <hide id="cm:categories" />
+
+                    <!-- ACME custom props -->
+                    <show id="printerOneContratos:tDocumento" />
+
+                    <show id="printerOneContratos:cnpj" />
+                    <show id="printerOneContratos:inscricaoEstadual" />
+                    <show id="printerOneContratos:nomeEmpresarial" />
+                    <show id="printerOneContratos:nomeFantasia" />
+                    <show id="printerOneContratos:numeroContrato" />
+                    <show id="printerOneContratos:numeroExistente" />
+                    <show id="printerOneContratos:dataInicio" />
+                    <show id="printerOneContratos:dataFim" />
+
+                    <show id="printerOneContratos:tIndice" />
+                    <show id="printerOneContratos:indiceReajuste" />
+                    <show id="printerOneContratos:valorAluguel" />
+                    <show id="printerOneContratos:valorAluguelMensal" />
+                    <show id="printerOneContratos:valorMulta" />
+                    <show id="printerOneContratos:vigenciaContrato" />
+
+                    <show id="printerOneContratos:equipamentosContrato" />
+
+                    <show id="printerOneContratos:pgA3Color" />
+                    <show id="printerOneContratos:pgA3Mono" />
+                    <show id="printerOneContratos:pgA4Color" />
+                    <show id="printerOneContratos:pgA4Mono" />
+                    <show id="printerOneContratos:frA3Color" />
+                    <show id="printerOneContratos:frA3Mono" />
+                    <show id="printerOneContratos:frA4Color" />
+                    <show id="printerOneContratos:frA4Mono" />
+                    <show id="printerOneContratos:valorFranquia" />
+
+                    <show id="printerOneContratos:contatosCliente" />
+
+                    <show id="printerOneContratos:frExA3Mono" />
+                    <show id="printerOneContratos:frExA3Color" />
+                    <show id="printerOneContratos:frExA4Color" />
+                    <show id="printerOneContratos:frExA4Mono" />
+                    <show id="printerOneContratos:logradouro" />
+                    <show id="printerOneContratos:numero" />
+                    <show id="printerOneContratos:bairro" />
+                    <show id="printerOneContratos:complemento" />
+                    <show id="printerOneContratos:cep" />
+                    <show id="printerOneContratos:municipio" />
+                    <show id="printerOneContratos:estado" />
+                    <show id="printerOneContratos:observacao" />
+                    <show id="printerOneContratos:contratoReferencia" />
+                    <show id="printerOneContratos:aprovado" />
+                    <show id="printerOneContratos:statusAssinatura" />
+                    <show id="printerOneContratos:vencido" />
+
+                </field-visibility>
+                <edit-form template="../documentlibrary/forms/doclib-simple-metadata.ftl" />
+                <appearance>
+                    <field id="cm:name">
+                        <control>
+                            <control-param name="maxLength">255</control-param>
+                        </control>
+                    </field>
+                    <field id="cm:title">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+                    </field>
+                    <field id="cm:description">
+                        <control>
+                            <control-param name="activateLinks">true</control-param>
+                        </control>
+                    </field>
+                    <field id="cm:taggable">
+                        <control>
+                            <control-param name="compactMode">true</control-param>
+                            <control-param name="params">aspect=cm:taggable</control-param>
+                            <control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
+                            <control-param name="createNewItemIcon">tag</control-param>
+                        </control>
+                    </field>
+                    <field id="cm:categories">
+                        <control>
+                            <control-param name="compactMode">true</control-param>
+                        </control>
+                    </field>
+
+                    <!-- ACME Props appearance -->
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set0" label-id="Tipo de Contrato" template="/org/alfresco/components/form/3-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set1" label-id="Dados do Cliente" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set2" label-id="Dados do Contrato" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set3" label-id="Equipamentos do Contrato" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set4" label-id="Valor por Pagina" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set5" label-id="Franquia" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set7" label-id="Excedentes" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set6" label-id="Contato" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set8" label-id="Endereço do Cliente" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set9" label-id=" " />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set10" label-id="Status do Contrato" template="/org/alfresco/components/form/3-column-set.ftl" />
+                    <field id="printerOneContratos:tIndice" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:cnpj" label-id="prop.printerOneContratos_cnpj" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                            <control-param name="maxLength">18</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:equipamentosContrato" set="printerOneContratos:printerOneContratos_cmm_set3">
+                        <control template="/org/alfresco/form/controls/datatable-popup-property-equipamentos.ftl">
+                            <control-param name="config">
+                                            qtd, Quantidade, number;
+                                            desc, Descrição, text;
+                                            valorUni, Valor Unitário, currency;
+                                            total, Total, currency;
+                                </control-param>
+                            <control-param name="debug">false</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:dataFim" set="printerOneContratos:printerOneContratos_cmm_set2"></field>
+                    <field id="printerOneContratos:indiceReajuste" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA4Color" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:tDocumento" set="printerOneContratos:printerOneContratos_cmm_set0">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:municipio" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorMulta" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numeroContrato" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:complemento" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:nomeEmpresarial" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA3Color" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numero" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:contratoReferencia" set="printerOneContratos:printerOneContratos_cmm_set9">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA4Mono" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:contatosCliente" set="printerOneContratos:printerOneContratos_cmm_set6">
+                        <control template="/org/alfresco/form/controls/datatable-popup-property-contatos.ftl">
+                            <control-param name="config">
+                                        nome, Nome, text;
+                                        email, E-mail, text;
+                                        tel, Telefone, text;
+                                </control-param>
+                            <control-param name="debug">false</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:aprovado" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:observacao" set="printerOneContratos:printerOneContratos_cmm_set9">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:dataInicio" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:bairro" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:cep" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                            <control-param name="maxLength">10</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:nomeFantasia" label-id="prop.printerOneContratos_nomeFantasia" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:vencido" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorAluguel" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorAluguelMensal" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA4Mono" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorFranquia" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:vigenciaContrato" read-only="true" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA3Mono" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA3Color" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA3Mono" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA4Color" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:inscricaoEstadual" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:logradouro" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:statusAssinatura" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:estado" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numeroExistente" read-only="true" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA3Mono" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA4Color" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA3Color" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA4Mono" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                </appearance>
+            </form>
+
+            <!-- Document Library Inline Edit form -->
+            <form id="doclib-inline-edit">
+                <field-visibility>
+                    <hide id="cm:name" />
+                    <hide id="cm:content" force="true" />
+                    <hide id="cm:title" force="true" />
+                    <hide id="cm:description" force="true" />
+
+                    <!-- ACME custom props -->
+                    <show id="printerOneContratos:tDocumento" />
+
+                    <show id="printerOneContratos:cnpj" />
+                    <show id="printerOneContratos:inscricaoEstadual" />
+                    <show id="printerOneContratos:nomeEmpresarial" />
+                    <show id="printerOneContratos:nomeFantasia" />
+                    <show id="printerOneContratos:numeroContrato" />
+                    <show id="printerOneContratos:numeroExistente" />
+                    <show id="printerOneContratos:dataInicio" />
+                    <show id="printerOneContratos:dataFim" />
+
+                    <show id="printerOneContratos:tIndice" />
+                    <show id="printerOneContratos:indiceReajuste" />
+                    <show id="printerOneContratos:valorAluguel" />
+                    <show id="printerOneContratos:valorAluguelMensal" />
+                    <show id="printerOneContratos:valorMulta" />
+                    <show id="printerOneContratos:vigenciaContrato" />
+
+                    <show id="printerOneContratos:equipamentosContrato" />
+
+                    <show id="printerOneContratos:pgA3Color" />
+                    <show id="printerOneContratos:pgA3Mono" />
+                    <show id="printerOneContratos:pgA4Color" />
+                    <show id="printerOneContratos:pgA4Mono" />
+                    <show id="printerOneContratos:frA3Color" />
+                    <show id="printerOneContratos:frA3Mono" />
+                    <show id="printerOneContratos:frA4Color" />
+                    <show id="printerOneContratos:frA4Mono" />
+                    <show id="printerOneContratos:valorFranquia" />
+
+                    <show id="printerOneContratos:contatosCliente" />
+
+                    <show id="printerOneContratos:frExA3Mono" />
+                    <show id="printerOneContratos:frExA3Color" />
+                    <show id="printerOneContratos:frExA4Color" />
+                    <show id="printerOneContratos:frExA4Mono" />
+                    <show id="printerOneContratos:logradouro" />
+                    <show id="printerOneContratos:numero" />
+                    <show id="printerOneContratos:bairro" />
+                    <show id="printerOneContratos:complemento" />
+                    <show id="printerOneContratos:cep" />
+                    <show id="printerOneContratos:municipio" />
+                    <show id="printerOneContratos:estado" />
+                    <show id="printerOneContratos:observacao" />
+                    <show id="printerOneContratos:contratoReferencia" />
+                    <show id="printerOneContratos:aprovado" />
+                    <show id="printerOneContratos:statusAssinatura" />
+                    <show id="printerOneContratos:vencido" />
+                </field-visibility>
+                <appearance>
+                    <field id="cm:name">
+                        <control>
+                            <control-param name="maxLength">255</control-param>
+                        </control>
+                    </field>
+                    <field id="cm:title">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+                    </field>
+                    <field id="cm:content" label-id="">
+                        <control>
+                            <control-param name="editorAppearance">explorer</control-param>
+                            <control-param name="forceEditor">true</control-param>
+                        </control>
+                    </field>
+
+                    <!-- ACME Props appearance -->
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set0" label-id="Tipo de Contrato" template="/org/alfresco/components/form/3-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set1" label-id="Dados do Cliente" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set2" label-id="Dados do Contrato" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set3" label-id="Equipamentos do Contrato" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set4" label-id="Valor por Pagina" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set5" label-id="Franquia" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set7" label-id="Excedentes" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set6" label-id="Contato" />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set8" label-id="Endereço do Cliente" template="/org/alfresco/components/form/2-column-set.ftl" />
+                    <set appearance="title" id="printerOneContratos:printerOneContratos_cmm_set9" label-id=" " />
+                    <set appearance="panel" id="printerOneContratos:printerOneContratos_cmm_set10" label-id="Status do Contrato" template="/org/alfresco/components/form/3-column-set.ftl" />
+                    <field id="printerOneContratos:tIndice" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:cnpj" label-id="prop.printerOneContratos_cnpj" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                            <control-param name="maxLength">18</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:equipamentosContrato" set="printerOneContratos:printerOneContratos_cmm_set3">
+                        <control template="/org/alfresco/form/controls/datatable-popup-property-equipamentos.ftl">
+                            <control-param name="config">
+                                            qtd, Quantidade, number;
+                                            desc, Descrição, text;
+                                            valorUni, Valor Unitário, currency;
+                                            total, Total, currency;
+                                </control-param>
+                            <control-param name="debug">false</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:dataFim" set="printerOneContratos:printerOneContratos_cmm_set2"></field>
+                    <field id="printerOneContratos:indiceReajuste" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA4Color" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:tDocumento" set="printerOneContratos:printerOneContratos_cmm_set0">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:municipio" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorMulta" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numeroContrato" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:complemento" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:nomeEmpresarial" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA3Color" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numero" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:contratoReferencia" set="printerOneContratos:printerOneContratos_cmm_set9">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA4Mono" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:contatosCliente" set="printerOneContratos:printerOneContratos_cmm_set6">
+                        <control template="/org/alfresco/form/controls/datatable-popup-property-contatos.ftl">
+                            <control-param name="config">
+                                    nome, Nome, text;
+                                    email, E-mail, text;
+                                    tel, Telefone, text;
+                                </control-param>
+                            <control-param name="debug">false</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:aprovado" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:observacao" set="printerOneContratos:printerOneContratos_cmm_set9">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:dataInicio" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:bairro" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:cep" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                            <control-param name="maxLength">10</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:nomeFantasia" label-id="prop.printerOneContratos_nomeFantasia" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:vencido" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorAluguel" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorAluguelMensal" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA4Mono" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:valorFranquia" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:vigenciaContrato" read-only="true" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA3Mono" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA3Color" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA3Mono" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA4Color" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:inscricaoEstadual" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:logradouro" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:statusAssinatura" set="printerOneContratos:printerOneContratos_cmm_set10">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:estado" set="printerOneContratos:printerOneContratos_cmm_set8">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:numeroExistente" read-only="true" set="printerOneContratos:printerOneContratos_cmm_set2">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA3Mono" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:pgA4Color" set="printerOneContratos:printerOneContratos_cmm_set4">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frA3Color" set="printerOneContratos:printerOneContratos_cmm_set5">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                    <field id="printerOneContratos:frExA4Mono" set="printerOneContratos:printerOneContratos_cmm_set7">
+                        <control>
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                        </control>
+                    </field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+    Create and search forms for acme:document
+    <config evaluator="aspect" condition="printerOneContratos:printerOneContratos">
+        <forms>
+            <!-- Search form -->
+            <form id="search">
+                <field-visibility>
+                    <show id="cm:name" />
+                    <show id="cm:title" force="true" />
+                    <show id="cm:description" force="true" />
+                    <show id="mimetype" />
+                    <show id="cm:modified" />
+                    <show id="cm:modifier" />
+
+                    <!-- ACME custom props -->
+                    <show id="printerOneContratos:cnpj" />
+                    <show id="printerOneContratos:nomeFantasia" />
+                </field-visibility>
+                <appearance>
+                    <field id="mimetype">
+                        <control template="/org/alfresco/components/form/controls/mimetype.ftl" />
+                    </field>
+                    <field id="cm:modifier">
+                        <control>
+                            <control-param name="forceEditable">true</control-param>
+                        </control>
+                    </field>
+                    <field id="cm:modified">
+                        <control template="/org/alfresco/components/form/controls/daterange.ftl" />
+                    </field>
+
+                    <!-- ACME Props appearance -->
+
+                    <!-- sc:productRelated -->
+                    <field id="printerOneContratos:cnpj" label-id="prop.printerOneContratos_cnpj" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl">
+                            <control-param name="style">background-color:#ffffff;</control-param>
+                            <control-param name="maxLength">18</control-param>
+                        </control>
+                    </field>
+
+                    <field id="printerOneContratos:nomeFantasia" label-id="prop.printerOneContratos_nomeFantasia" set="printerOneContratos:printerOneContratos_cmm_set1">
+                        <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+                    </field>
+                </appearance>
+            </form>
+        </forms>
+    </config>
+</alfresco-config>
