@@ -1,9 +1,0 @@
-<webscript>
-    <shortname>Get todos os Contratos</shortname>
-    <description>Retorna uma lista de Contratos</description>
-    <url>/printerone/contratosTeste</url>
-    <url>/printerone/contratosTeste.json</url>
-    <format default="json">extension</format>
-    <authentication>user</authentication>
-    <transaction>none</transaction>
-</webscript>
